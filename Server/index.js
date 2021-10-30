@@ -8,6 +8,8 @@ import multer from "multer";
 import userRoute from "./routes/users.js";
 import authRoute from "./routes/auth.js";
 import postRoute from "./routes/posts.js";
+import conversationRoute from "./routes/conversation.js";
+import messageRoute from "./routes/messages.js";
 import {Router} from 'express';
 import path from "path";
 
@@ -53,6 +55,8 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);
+app.use("/api/conversations", conversationRoute);
+app.use("/api/messages", messageRoute);
 
 app.listen(PORT, () => {
   console.log(`Backend server is running at port ${PORT} !`);

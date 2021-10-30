@@ -62,7 +62,7 @@ export default function Profile() {
         <Sidebar />
         <div className="profileRight">
           <div className="profileRightTop">
-            <form className="profileCover" >
+            <form className="profileCover">
             <label htmlFor="file" className="shareOption">
               <img
                 className="profileCoverImg"
@@ -81,7 +81,7 @@ export default function Profile() {
                 accept=".png,.jpeg,.jpg"
               />
             </label>
-              <label htmlFor="file" className="shareOption">            
+              <label className="shareOption">            
               <img
                 className="profileUserImg"
                 src={
@@ -92,16 +92,15 @@ export default function Profile() {
                 alt=""
               />
               <input
-              style={{ display: "none" }}
+              style={{display:"none"}}
                 name="file"
                 type="file"
                 id="file"
                 accept=".png,.jpeg,.jpg"
                 onChange={(e) => setFile(e.target.files[0])}
               />
-              <button type="submit" style={{ marginLeft: "650px", marginTop:"50px" }} onClick={submitHandler}>Upload</button> 
-            </label>
-              
+              <button type="submit"  onClick={submitHandler}>Upload</button> 
+            </label>    
             </form>
             <div className="profileInfo">
               <h4 className="profileInfoName">{user.username}</h4>

@@ -38,7 +38,6 @@ export default function Share() {
       data.append("name", fileName);
       data.append("file", file);
       newPost.img = fileName;
-      console.log(newPost);
       try {
         if(newPost!== ""){
         await axios.post("/upload", data);
@@ -66,7 +65,7 @@ export default function Share() {
           <img
             className="shareProfileImg"
             src={
-              user.profilePicture
+              user?.profilePicture
                 ? PF + user.profilePicture
                 : PF + "person/noAvatar.png"
             }
