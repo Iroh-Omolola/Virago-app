@@ -44,6 +44,26 @@ const UserController = {
       res.status(500).json(err);
     }
   },
+  getUsers: async (req, res) => {
+    try{
+      const userProfile= await User.find({"user_id": req.body.user}).lean().exec();
+     if(!userProfile || userProfile[0]=='' || userProfile.length==0 || userProfile[0] == undefined) {
+       res.status(401).json({
+             message : "User profile can not be fetched"
+            });
+      }
+      else {
+      
+          res.status(200).json(userProfile);
+        }
+      }
+    catch(err) {
+      console.log("Error : ", err);
+      res.status(400).json({
+        message: "User profile can not be fetched successfully"
+      });
+    }
+  },
   getAFriend:  async (req, res) => {
     try {
       const user = await User.findById(req.params.userId);

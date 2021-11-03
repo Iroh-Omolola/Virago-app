@@ -22,9 +22,15 @@ export default function Profile() {
     fetchUser();
   }, [username]);
 
-  const submitHandler = async (e) => {
+  const onChangeProfilePicture= async (e)=>{
+   
     e.preventDefault();
-
+    // setFile(e.target.files[0]);
+    console.log(e.target.files[0])  
+    submitHandler(e.target.files[0]);
+    
+  }
+  const submitHandler = async (file) => {  
    const updateProfile={
     userId:user._id
    };
@@ -44,13 +50,13 @@ export default function Profile() {
   }
   try {
     if(updateProfile!== ""){
-      await axios.put(`/users/${currentUser._id}`, updateProfile , {
+      const res= await axios.put(`/users/${currentUser._id}`, updateProfile , {
         headers: {
           "content-type": "application/json"
         }
           } 
           );
-      window.location.reload();
+          if(res.data) window.location.reload();
     }
   } catch (err) {}
 };
@@ -90,6 +96,7 @@ export default function Profile() {
                     : PF + "person/noAvatar.png"
                 }
                 alt=""
+                
               />
               <input
               style={{display:"none"}}
@@ -97,9 +104,9 @@ export default function Profile() {
                 type="file"
                 id="file"
                 accept=".png,.jpeg,.jpg"
-                onChange={(e) => setFile(e.target.files[0])}
+                onChange={onChangeProfilePicture}
               />
-              <button type="submit"  onClick={submitHandler}>Upload</button> 
+              {/* <button type="submit" onClick={submitHandler}>Upload</button>  */}
             </label>    
             </form>
             <div className="profileInfo">

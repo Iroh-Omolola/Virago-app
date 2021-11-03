@@ -16,6 +16,7 @@ export default function Share() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const desc = useRef();
   const [file, setFile] = useState(null);
+  const [post, setPost] = useState([]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -42,20 +43,28 @@ export default function Share() {
         if(newPost!== ""){
         await axios.post("/upload", data);
         }
-      } catch (err) {}
-    }
-    try {
-      if(newPost!== ""){
-        await axios.post("/posts", newPost , {
-          headers:{
-            "Authorization":`Bearer ${token}`      
-      
-          }
-            } 
-            );
-        window.location.reload();
+      } catch (err) {
+        console.log(err)
       }
-    } catch (err) {}
+    }
+    if(newPost!==""){
+      try {
+        if(newPost!== ""){
+         const res = await axios.post("/posts", newPost , {
+            headers:{
+              "Authorization":`Bearer ${token}`      
+        
+            }
+              } 
+              );
+              window.location.reload();
+              setPost(res.data)
+        }
+      }  catch (err) {
+        console.log(err)
+      }
+    }
+  
   };
 
   return (
@@ -88,7 +97,7 @@ export default function Share() {
           <div className="shareOptions">
             <label htmlFor="file" className="shareOption">
               <PermMedia htmlColor="tomato" className="shareIcon" />
-              <span className="shareOptionText">Photo or Video</span>
+              <span className="shareOptionText">Photo</span>
               <input
                 style={{ display: "none" }}
                 type="file"
@@ -110,7 +119,7 @@ export default function Share() {
               <span className="shareOptionText">Feelings</span>
             </div>
           </div>
-          <button className="shareButton" type="submit">
+          <button className="shareButton" type="submit" disabled={post===""}>
             Share
           </button>
         </form>
